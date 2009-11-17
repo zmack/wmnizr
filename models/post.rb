@@ -3,6 +3,6 @@ class Post
 
   property :id, Serial
   property :title, String
-  property :site_id, Serial
+  property :site_id, Integer
   property :text, Text
 end
