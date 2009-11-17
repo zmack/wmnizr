@@ -1,6 +1,8 @@
-require 'bootstrap'
+require 'bootstrap.rb'
+require 'sinatra'
 
-get '/' do
+get '/admin' do
+  p request["SERVER_NAME"]
   @foo = "Hello"
   haml :index
 end
