@@ -2,6 +2,7 @@ require 'rubygems'
 
 require 'haml'
 require 'dm-core'
+require 'dm-timestamps'
 
 #Really, how the fuck would you do this another way ? =/
 Dir.glob('models/*.rb') { |x| require x }
