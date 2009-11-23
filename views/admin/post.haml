@@ -1,5 +1,6 @@
 %li
   %span= post.title || 'Untitled'
   %span.site= post.site
-  %a.edit{ :href => "/admin/posts/#{post.id}" } edit
+  %a.view{ :href => "/admin/posts/#{post.id}" } view
+  %a.edit{ :href => "/admin/posts/#{post.id}/edit" } edit
   %a.delete{ :href => "/admin/posts/#{post.id}" } delete
