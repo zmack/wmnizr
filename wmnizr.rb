@@ -1,18 +1,6 @@
 require 'sinatra'
 
-def template_folder_for(hostname)
-  case hostname
-    when /\Alocalhost\Z/
-      "foo"
-    when /\Asymbolya\.local\Z/
-      "bar"
-    else
-      "default"
-  end
-end
-
 def hostname_for(hostname)
-  p hostname
   if hostname[0,4] == "www."
     hostname[4,-1]
   else
@@ -22,41 +10,63 @@ end
 
 class Wmnizr < Sinatra::Base
   before do
-    @template_folder = template_folder_for request.host
     @hostname = hostname_for request.host
   end
 
   get '/admin' do
-    #p request["SERVER_NAME"]
     @posts = Post.all
 
-    haml :'admin/index'
+    haml :'admin/index', :layout => :'admin/layout'
+  end
+
+  get '/admin/posts' do
+    @posts = Post.all
+
+    haml :'admin/posts', :layout => :'admin/layout'
   end
 
   post '/admin/posts' do
-  end
+    @post = Post.create params[:post]
 
-  put '/admin/posts/:id' do
+    redirect "/admin/posts/#{@post.id}"
   end
 
   get '/admin/posts/:id' do
+    @post = Post.first :id => params[:id]
+
+    haml :'admin/single_post', :layout => :'admin/layout'
   end
+
+  get '/admin/posts/:id/edit' do
+    @post = Post.first :id => params[:id]
+
+    haml :'admin/post_form', :layout => :'admin/layout', :locals => { :action => "/admin/posts/#{@post.id}", :post => @post }
+  end
+
+  post '/admin/posts/:id' do
+    @post = Post.first :id => params[:id]
+
+    @post.update(params[:post])
+
+    redirect "/admin/posts/#{@post.id}"
+  end
+
 
   get '/:year/:permalink' do
     @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
 
-    haml :"#{@hostname}/single_post.html", :layout => :"#{@hostname}/layout.html" 
+    haml :"#{@hostname}/single_post", :layout => :"#{@hostname}/layout" 
   end
 
   get '/:permalink' do
     @post = Post.published.first :permalink => params[:permalink], :site => @hostname
 
-    haml :"#{@hostname}/single_post.html", :layout => :"#{@hostname}/layout.html" 
+    haml :"#{@hostname}/single_post", :layout => :"#{@hostname}/layout" 
   end
 
   get '/' do
-    @posts = Post.published
+    @posts = Post.published.all :site => @hostname
 
-    haml :"#{@hostname}/index.html", :layout => :"#{@hostname}/layout.html" 
+    haml :"#{@hostname}/index", :layout => :"#{@hostname}/layout" 
   end
 end

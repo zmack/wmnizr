@@ -1,0 +1,4 @@
+.new_post
+  = haml :'admin/post_form', :locals => { :action => '/admin/posts', :post => Post.new }
+
+= haml :'admin/posts'

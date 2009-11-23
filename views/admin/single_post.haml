@@ -1,0 +1,11 @@
+.post
+  %h2= @post.title
+  .meta
+    %span.description Created at
+    %span.created_at= @post.created_at || '-'
+    %span.description Updated at
+    %span.updated_at= @post.updated_at || '-'
+    %span.description Published at
+    %span.published_at= @post.published_at || '-'
+  .content
+    = @post.text

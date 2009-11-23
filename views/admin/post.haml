@@ -1,0 +1,5 @@
+%li
+  %span= post.title || 'Untitled'
+  %span.site= post.site
+  %a.edit{ :href => "/admin/posts/#{post.id}" } edit
+  %a.delete{ :href => "/admin/posts/#{post.id}" } delete

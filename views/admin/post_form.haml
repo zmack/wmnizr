@@ -1,0 +1,14 @@
+%form{ :action => action, :method => "post" }
+  %label{ :for => 'title' } Title:
+  %input{ :type => 'text', :name => 'post[title]', :id => 'title', :value => post.title }
+
+  %label{ :for => 'site' } Site:
+  %input{ :type => 'text', :name => 'post[site]', :id => 'site', :value => post.site }
+
+  %label{ :for => 'published' } Published
+  %input{ :type => 'checkbox', :name => 'post[published]', :id => 'title', :value => post.published? }
+
+  %label{ :for => 'text' } Content:
+  %textarea{ :name => 'post[text]', :id => 'text' }= post.text
+
+  %input{ :type => 'submit', :value => 'Create' }
