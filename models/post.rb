@@ -13,6 +13,9 @@ class Post
   property :permalink, String
   property :published_at, DateTime
 
+  property :created_at, DateTime
+  property :updated_at, DateTime
+
   def self.published
     self.all(:conditions => ["published_at is not null"])
   end
@@ -33,6 +36,10 @@ class Post
   end
 
   def published=(value)
-    self.published_at = Time.now if value
+    if value
+      self.published_at = Time.now
+    else
+      self.published_at = nil
+    end
   end
 end

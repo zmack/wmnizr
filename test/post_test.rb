@@ -34,6 +34,15 @@ class PostTest < WmnizrTest
     assert_equal nil, @post.published_at 
   end
 
+  def test_set_published_at_to_nil_if_published_is_set_to_false
+    @post = Post.new :title => "foo bar", :published => true
+
+    assert_not_equal nil, @post.published_at 
+
+    @post.published = false
+    assert_equal nil, @post.published_at 
+  end
+
   def test_return_published_posts
     @post = Post.create :title => 'foo', :published => true
     @post = Post.create :title => 'foo', :published => false
