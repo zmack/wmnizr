@@ -1,6 +1,7 @@
 require 'rubygems'
 
 require 'haml'
+require 'sass'
 require 'dm-core'
 require 'dm-timestamps'
 

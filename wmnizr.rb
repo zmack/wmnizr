@@ -11,6 +11,7 @@ end
 class Wmnizr < Sinatra::Base
   before do
     @hostname = hostname_for request.host
+    content_type 'text/html', :charset => 'utf-8'
   end
 
   get '/admin' do
@@ -49,6 +50,11 @@ class Wmnizr < Sinatra::Base
     @post.update(params[:post])
 
     redirect "/admin/posts/#{@post.id}"
+  end
+
+  get '/stylesheets/:stylesheet.css' do
+    content_type 'text/css', :charset => 'utf-8'
+    sass :"#{@hostname}/#{params[:stylesheet]}", :views => File.join(BASE_PATH, 'sass')
   end
 
 
