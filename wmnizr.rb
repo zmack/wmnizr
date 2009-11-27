@@ -14,6 +14,16 @@ class Wmnizr < Sinatra::Base
     content_type 'text/html', :charset => 'utf-8'
   end
 
+  get '/login' do
+    haml :'admin/login', :layout => :'admin/layout'
+  end
+
+  post '/login' do
+    p env['warden'].authenticate!(:pickle)
+
+    haml :'admin/login', :layout => :'admin/layout'
+  end
+
   get '/admin' do
     @posts = Post.all
 
