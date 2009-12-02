@@ -15,7 +15,6 @@ class TestHosts < WmnizrTest
 
   def test_stuff_happens
     get '/', {}, { 'SERVER_NAME' => 'localhost' }
-    p last_response
   end
 
 end

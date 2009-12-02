@@ -1,29 +1,21 @@
 class Warden::Serializers::Session
   def serialize(user)
-    p "----------------"
-    p user
-    p user.id
     user.nil? ? nil : user.id
   end
 
   def deserialize(id)
-    p "==============#{id}"
     id.nil? ? nil : User.get(id)
   end
 end
 
-Warden::Strategies.add(:pickle) do
+Warden::Strategies.add(:bcrypt_password) do
   def valid?
-    p params.inspect
-    p params['login']
-    params["login"] || params["password"]
+    params["login"] && params["password"]
   end
 
   def authenticate!
-    p params.inspect
-    p params['email']
-    u = User.first
-    p u
+    u = User.find_by_login_and_password(params["login"], params["password"])
+
     u.nil? ? fail!("Could not log in") : success!(u)
   end
 end

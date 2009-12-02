@@ -4,6 +4,8 @@ require 'haml'
 require 'sass'
 require 'dm-core'
 require 'dm-timestamps'
+require 'dm-validations'
+require 'bcrypt'
 require 'warden'
 
 #Really, how the fuck would you do this another way ? =/
