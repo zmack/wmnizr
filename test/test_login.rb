@@ -41,6 +41,15 @@ class TestHosts < WmnizrTest
     assert_equal 302, last_response.status
   end
 
+  def test_only_allows_login_on_correct_password
+    post '/login', :login => 'fanel', :password => 'cal'
+
+    assert_equal 200, last_response.status
+
+    get '/admin'
+    assert_equal 302, last_response.status
+  end
+
   def test_does_ok_when_logged_in
     # cheesy rack session id bug down here, do investigate :3
     post '/login', :login => 'fanel', :password => 'pitulice'
