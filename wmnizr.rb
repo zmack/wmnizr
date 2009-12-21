@@ -9,6 +9,7 @@ def hostname_for(hostname)
 end
 
 class Wmnizr < Sinatra::Base
+  include Cache
   helpers AuthenticationHelpers
   before do
     @hostname = hostname_for request.host
@@ -84,18 +85,18 @@ class Wmnizr < Sinatra::Base
   get '/:year/:permalink' do
     @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
 
-    haml :"#{@hostname}/single_post", :layout => :"#{@hostname}/layout" 
+    cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout")) unless @post.nil?
   end
 
   get '/:permalink' do
     @post = Post.published.first :permalink => params[:permalink], :site => @hostname
 
-    haml :"#{@hostname}/single_post", :layout => :"#{@hostname}/layout" 
+    cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout")) unless @post.nil?
   end
 
   get '/' do
     @posts = Post.published.all :site => @hostname
 
-    haml :"#{@hostname}/index", :layout => :"#{@hostname}/layout" 
+    cache(haml(:"#{@hostname}/index", :layout => :"#{@hostname}/layout"))
   end
 end

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>
+      Foo
+    </title>
+  </head>
+  <body>
+    <div class='post'>
+      <h2>Gigel este un zeu</h2>
+      <div class='meta'>
+        <span class='description'>Created at</span>
+        <span class='created_at'>2009-12-07T15:04:29+02:00</span>
+        <span class='description'>Updated at</span>
+        <span class='updated_at'>2009-12-07T15:04:29+02:00</span>
+        <span class='description'>Published at</span>
+        <span class='published_at'>2009-12-07T15:04:29+02:00</span>
+      </div>
+      <div class='content'>
+        Mie imi place de gigel ca e un zeu. E zeul meu :)
+      </div>
+    </div>
+  </body>
+</html>
