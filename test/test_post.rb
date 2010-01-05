@@ -55,6 +55,6 @@ class PostTest < WmnizrTest
     @post = Post.create :title => 'foo', :published => true
 
     assert_equal 1, Post.by_year(2005).count
-    assert_equal 1, Post.by_year(2009).count
+    assert_equal 1, Post.by_year(Time.now.year).count
   end
 end
