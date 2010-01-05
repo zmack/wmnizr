@@ -5,6 +5,8 @@ class User
   property :login, String
   property :crypted_password, String, :length => 60
 
+  has n, :posts
+
   validates_is_unique :login
 
   def self.find_by_login_and_password(login, password)

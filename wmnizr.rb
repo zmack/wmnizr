@@ -13,6 +13,7 @@ class Wmnizr < Sinatra::Base
   helpers AuthenticationHelpers
   before do
     @hostname = hostname_for request.host
+    @site = Site.first(:hostname => @hostname)
     content_type 'text/html', :charset => 'utf-8'
   end
 
@@ -49,7 +50,7 @@ class Wmnizr < Sinatra::Base
   post '/admin/posts' do
     require_authentication
 
-    @post = Post.create params[:post]
+    @post = current_user.posts.create params[:post]
     redirect "/admin/posts/#{@post.id}"
   end
 
@@ -79,6 +80,12 @@ class Wmnizr < Sinatra::Base
   get '/stylesheets/:stylesheet.css' do
     content_type 'text/css', :charset => 'utf-8'
     sass :"#{@hostname}/#{params[:stylesheet]}", :views => File.join(BASE_PATH, 'sass')
+  end
+
+  get '/feed/atom.xml' do
+    content_type 'application/atom+xml', :charset => 'utf-8'
+
+    #  cache build_atom_feed(
   end
 
 

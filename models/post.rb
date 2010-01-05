@@ -16,6 +16,8 @@ class Post
   property :created_at, DateTime
   property :updated_at, DateTime
 
+  belongs_to :user
+
   def self.published
     self.all(:conditions => ["published_at is not null"])
   end
@@ -30,6 +32,9 @@ class Post
       (Iconv.new('US-ASCII//TRANSLIT', 'utf-8').iconv title).gsub(/[^\w\s\-\â€”]/,'').gsub(/[^\w]|[\_]/,' ').split.join('-').downcase  
   end
 
+  def perma_path
+    "#{self.published_at.year}/#{self.permalink}"
+  end
 
   def published?
     !self.published_at.nil?

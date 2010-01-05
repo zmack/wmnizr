@@ -7,6 +7,7 @@ require 'dm-timestamps'
 require 'dm-validations'
 require 'bcrypt'
 require 'warden'
+require 'builder'
 
 #Really, how the fuck would you do this another way ? =/
 Dir.glob('models/*.rb') { |x| require x }
