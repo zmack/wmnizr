@@ -85,7 +85,7 @@ class Wmnizr < Sinatra::Base
   get '/feed/atom.xml' do
     content_type 'application/atom+xml', :charset => 'utf-8'
 
-    #  cache build_atom_feed(
+    cache @site.atom_feed_from(Post.all(:published_at.not => nil, :site => @hostname, :order => [ :published_at.desc ]))
   end
 
 
