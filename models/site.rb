@@ -14,8 +14,8 @@ class Site
     "#{host_url}/feed/atom.xml"
   end
 
-  def url_for_article(article)
-    "#{host_url}/#{article.perma_path}"
+  def url_for_post(post)
+    "#{host_url}/#{post.perma_path}"
   end
 
   def atom_feed_from(items)
@@ -33,13 +33,13 @@ class Site
 
       items.each do |item|
         feed.entry do |entry|
-          entry.id self.url_for_article(item)
+          entry.id self.url_for_post(item)
           entry.author do |author|
             author.name item.user.login
             author.uri self.host_url
           end
           entry.title item.title
-          entry.link(:rel => "alternate", :type => 'text/html', :href => self.url_for_article(item))
+          entry.link(:rel => "alternate", :type => 'text/html', :href => self.url_for_post(item))
           entry.updated item.updated_at.to_time.iso8601
           entry.published item.published_at.to_time.iso8601
           entry.content(:type => 'xhtml') do |content|
