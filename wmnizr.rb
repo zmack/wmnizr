@@ -90,14 +90,22 @@ class Wmnizr < Sinatra::Base
   get '/:year/:permalink' do
     @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
 
-    cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout")) unless @post.nil?
+    unless @post.nil?
+      cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout"))
+    else
+      status(404)
+    end
   end
 
   # compatibility with mephisto / wordpress routes
   get '/:year/*/:permalink' do
     @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
 
-    cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout")) unless @post.nil?
+    unless @post.nil?
+      redirect @site.url_for_post(@post), 301
+    else
+      status(404)
+    end
   end
 
   get '/:permalink' do
@@ -107,7 +115,7 @@ class Wmnizr < Sinatra::Base
   end
 
   get '/' do
-    @posts = Post.published.all :site => @hostname
+    @posts = Post.published.all :site => @hostname, :limit => 5, :offset => params[:offset].to_i, :order => [ :published_at.desc ]
 
     cache(haml(:"#{@hostname}/index", :layout => :"#{@hostname}/layout"))
   end
