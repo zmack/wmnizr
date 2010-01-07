@@ -11,6 +11,11 @@ class PostTest < WmnizrTest
     assert_equal 'foo-bar', @post.permalink
   end
 
+  def test_generate_perma_path
+    @post = Post.create(:title => 'foo bar', :user => @user, :published_at => DateTime.parse('2009-10-11'))
+    assert_equal '2009/foo-bar', @post.perma_path
+  end
+
   def test_dont_die_on_nil_title
     @post = Post.new
 

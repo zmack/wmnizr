@@ -5,17 +5,24 @@ class Site
   property :hostname, String
   property :title, String
   property :slug, String
+  property :port, Integer
 
   def host_url
-    "http://#{hostname}/"
+    return @host_url unless @host_url.nil?
+
+    if self.port == 80 || port.nil?
+      @host_url = "http://#{hostname}/"
+    else 
+      @host_url = "http://#{hostname}:#{port}/"
+    end
   end
 
   def feed_url
-    "#{host_url}/feed/atom.xml"
+    "#{host_url}feed/atom.xml"
   end
 
   def url_for_post(post)
-    "#{host_url}/#{post.perma_path}"
+    "#{host_url}#{post.perma_path}"
   end
 
   def atom_feed_from(items)
