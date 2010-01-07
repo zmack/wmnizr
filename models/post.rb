@@ -4,6 +4,8 @@ class Post
   include DataMapper::Resource
   include DataMapper::Timestamp
 
+  default_scope(:default).update(:order => [ :published_at.desc ])
+
   before :save, :fill_permalink
 
   property :id, Serial
