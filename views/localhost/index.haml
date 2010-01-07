@@ -1,4 +1,5 @@
-%h1 Lupta steaua!
+%h1= @site.title
+%em= @site.slug
 
 - @posts.each do |post|
-  = haml :post, :locals => { :post => post }
+  = haml :"#{@hostname}/post", :locals => { :post => post }

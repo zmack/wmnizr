@@ -1,0 +1,6 @@
+%li
+  %h2
+    %a{ :href => @site.url_for_post(post) }= post.title
+  %span= post.published_at
+  .content
+    = post.text

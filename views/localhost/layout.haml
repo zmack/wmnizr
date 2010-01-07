@@ -2,7 +2,9 @@
 %html
   %head
     %title
-      Foo
+      = @site.title
+      - if @post
+        = " - #{@post.title}"
   %body
     = yield
 
