@@ -1,5 +1,3 @@
-require 'sinatra'
-
 def hostname_for(hostname)
   if hostname[0,4] == "www."
     hostname[4,-1]
@@ -13,7 +11,7 @@ class Wmnizr < Sinatra::Base
   helpers AuthenticationHelpers
   before do
     @hostname = hostname_for request.host
-    @site = Site.first(:hostname => @hostname)
+    @site = Site.first(:hostname => @hostname) || Site.new
     content_type 'text/html', :charset => 'utf-8'
   end
 
@@ -90,6 +88,13 @@ class Wmnizr < Sinatra::Base
 
 
   get '/:year/:permalink' do
+    @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
+
+    cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout")) unless @post.nil?
+  end
+
+  # compatibility with mephisto / wordpress routes
+  get '/:year/*/:permalink' do
     @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
 
     cache(haml(:"#{@hostname}/single_post", :layout => :"#{@hostname}/layout")) unless @post.nil?

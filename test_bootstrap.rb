@@ -1,5 +1,6 @@
+require File.expand_path(File.dirname(__FILE__) + "/bootstrap.rb")
 require 'test/unit'
-require File.expand_path(File.dirname(__FILE__) + "/../bootstrap.rb")
+require 'rack/test'
 
 DataMapper.setup :default, "sqlite3::memory:"
 DataMapper.auto_migrate!

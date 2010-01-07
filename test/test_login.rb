@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "test_bootstrap.rb"))
+require File.expand_path(File.join(File.dirname(__FILE__), '..', "test_bootstrap.rb"))
 require File.expand_path(File.join(File.dirname(__FILE__), '..', "wmnizr.rb"))
 require 'rack/test'
 
@@ -18,7 +18,7 @@ class TestHosts < WmnizrTest
 
   def before
     @user = User.create(:login => 'fanel', :password => 'pitulice')
-    @post = Post.create
+    @post = Post.create(:user => @user)
   end
 
   def test_redirected_to_login_when_requesting_admin_bits

@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "test_bootstrap.rb"))
+require File.expand_path(File.join(File.dirname(__FILE__), '..', "test_bootstrap.rb"))
 
 
 class PostTest < WmnizrTest
