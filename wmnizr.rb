@@ -77,7 +77,7 @@ class Wmnizr < Sinatra::Base
 
   get '/stylesheets/:stylesheet.css' do
     content_type 'text/css', :charset => 'utf-8'
-    sass :"#{@hostname}/#{params[:stylesheet]}", :views => File.join(BASE_PATH, 'sass')
+    sass :"#{@hostname}/stylesheets/#{params[:stylesheet]}"
   end
 
   get '/feed/atom.xml' do
@@ -86,6 +86,12 @@ class Wmnizr < Sinatra::Base
     cache @site.atom_feed_from(Post.all(:published_at.not => nil, :site => @hostname, :order => [ :published_at.desc ]))
   end
 
+  get '/page/:page' do
+    @page = params[:page].to_i
+    @posts = Post.published.all :site => @hostname, :limit => 5, :offset => @page * 5, :order => [ :published_at.desc ]
+
+    cache(haml(:"#{@hostname}/index", :layout => :"#{@hostname}/layout"))
+  end
 
   get '/:year/:permalink' do
     @post = Post.by_year(params[:year]).first :permalink => params[:permalink], :site => @hostname
@@ -115,8 +121,9 @@ class Wmnizr < Sinatra::Base
   end
 
   get '/' do
-    @posts = Post.published.all :site => @hostname, :limit => 5, :offset => params[:offset].to_i, :order => [ :published_at.desc ]
+    @posts = Post.published.all :site => @hostname, :limit => 5, :order => [ :published_at.desc ]
 
     cache(haml(:"#{@hostname}/index", :layout => :"#{@hostname}/layout"))
   end
+
 end

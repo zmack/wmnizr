@@ -1,5 +1,3 @@
-%h1= @site.title
-%em= @site.slug
-
-- @posts.each do |post|
-  = haml :"#{@hostname}/post", :locals => { :post => post }
+%ul.posts
+  - @posts.each do |post|
+    = haml :"#{@hostname}/post", :locals => { :post => post }

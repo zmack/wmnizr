@@ -5,6 +5,25 @@
       = @site.title
       - if @post
         = " - #{@post.title}"
+    %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/main.css' }
   %body
+    %h1
+      %a{ :href => @site.host_url }= @site.title
+    %em.slug= @site.slug
+    #about
+      %h2 About your host
+      %img{ :src => 'http://www.gravatar.com/avatar/75cb325d7b55a6659fc050f6fa822c7c.png?s=50', :alt => "Andrei's most compelling pink goat avatar", :title => "If you see this somewhere, it's most likely me" }
+      %p
+        I'm
+        %a{ :href => 'http://andascarygoat.com' } Andrei Bocan
+        \.
+      %p
+        I make the interwebs happen.
+      %p
+        Feel free to stalk me on 
+        %a{ :href => 'http://twitter.com/monsieur_pickle' } twitter
+        or
+        %a{ :href => 'http://github.com/zmack' } github
+
     = yield
 

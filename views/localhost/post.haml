@@ -1,6 +1,8 @@
 %li
   %h2
     %a{ :href => @site.url_for_post(post) }= post.title
-  %span= post.published_at
+  %span.posted_on
+    posted on the day europeans know as
+    %span.date= post.published_at.strftime("%d.%m.%Y")
   .content
     = post.text
