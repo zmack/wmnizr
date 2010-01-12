@@ -6,6 +6,7 @@
       - if @post
         = " - #{@post.title}"
     %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/main.css' }
+    %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/javascript/github.css' }
   %body
     %h1
       %a{ :href => @site.host_url }= @site.title
@@ -26,4 +27,8 @@
         %a{ :href => 'http://github.com/zmack' } github
 
     = yield
+
+    %script{ :language => "Javascript", :src => '/javascript/highlight.pack.js' }
+    %script{ :language => 'Javascript' }
+      hljs.initHighlightingOnLoad();
 
