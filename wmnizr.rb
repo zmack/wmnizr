@@ -91,7 +91,7 @@ class Wmnizr < Sinatra::Base
     cache @site.atom_feed_from(Post.all(:published_at.not => nil, :site => @hostname, :order => [ :published_at.desc ]))
   end
 
-  get '/page/:page' do
+  get '/pages/:page' do
     @page = params[:page].to_i
     @posts = Post.published.all :site => @hostname, :limit => 5, :offset => @page * 5, :order => [ :published_at.desc ]
 
