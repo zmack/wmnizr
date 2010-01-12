@@ -52,6 +52,16 @@ class PostTest < WmnizrTest
     assert_equal nil, @post.published_at 
   end
 
+  def test_dont_use_published_as_a_fucking_toggle
+    @post = Post.new :title => "foo bar", :published => true, :user => @user
+
+    @post.published = true
+    assert @post.published?
+    
+    @post.published = true
+    assert @post.published?
+  end
+
   def test_return_published_posts
     @post = Post.create :title => 'foo', :published => true, :user => @user
     @post = Post.create :title => 'foo', :published => false, :user => @user
