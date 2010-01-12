@@ -43,7 +43,7 @@ class Post
   end
 
   def published=(value)
-    if value
+    if value && !self.published
       self.published_at = Time.now
     else
       self.published_at = nil
