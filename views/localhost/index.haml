@@ -2,5 +2,8 @@
   - @posts.each do |post|
     = haml :"#{@hostname}/post", :locals => { :post => post }
 #paging
-  %a{ :href => '/pages/1' } Older stuff
-  %a{ :href => '/pages/2' } Newer stuff
+  - if @page < @total_pages
+    %a{ :href => "/pages/#{@page+1}" } Older stuff
+  
+  - if @page > 0 
+    %a{ :href => "/pages/#{@page-1}" } Newer stuff

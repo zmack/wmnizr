@@ -7,6 +7,7 @@ def hostname_for(hostname)
 end
 
 class Wmnizr < Sinatra::Base
+  POSTS_PER_PAGE = 5
   include Cache
   helpers AuthenticationHelpers
   before do
@@ -93,7 +94,8 @@ class Wmnizr < Sinatra::Base
 
   get '/pages/:page' do
     @page = params[:page].to_i
-    @posts = Post.published.all :site => @hostname, :limit => 5, :offset => @page * 5, :order => [ :published_at.desc ]
+    @total_pages = Post.all(:site => @hostname).count / POSTS_PER_PAGE
+    @posts = Post.published.all :site => @hostname, :limit => POSTS_PER_PAGE, :offset => @page * POSTS_PER_PAGE, :order => [ :published_at.desc ]
 
     cache(haml(:"#{@hostname}/index", :layout => :"#{@hostname}/layout"))
   end
@@ -126,7 +128,9 @@ class Wmnizr < Sinatra::Base
   end
 
   get '/' do
-    @posts = Post.published.all :site => @hostname, :limit => 5, :order => [ :published_at.desc ]
+    @page = 0
+    @total_pages = Post.all(:site => @hostname).count / POSTS_PER_PAGE
+    @posts = Post.published.all :site => @hostname, :limit => POSTS_PER_PAGE, :order => [ :published_at.desc ]
 
     cache(haml(:"#{@hostname}/index", :layout => :"#{@hostname}/layout"))
   end
