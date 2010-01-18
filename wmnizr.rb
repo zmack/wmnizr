@@ -81,9 +81,9 @@ class Wmnizr < Sinatra::Base
     sass :"#{@hostname}/stylesheets/#{params[:stylesheet]}"
   end
 
-  get '/javascript/:file' do
+  get '/javascript/*' do
     content_type 'text/css', :charset => 'utf-8'
-    File.read "public/#{params[:file]}"
+    File.read "public/#{params[:splat]}"
   end
 
   get '/feed/atom.xml' do
