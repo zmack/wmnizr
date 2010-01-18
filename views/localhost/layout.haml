@@ -7,6 +7,7 @@
         = " - #{@post.title}"
     %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/stylesheets/main.css' }
     %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/javascript/github.css' }
+    %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/javascript/uv/lazy.css' }
   %body
     %h1
       %a{ :href => @site.host_url }= @site.title
@@ -28,9 +29,5 @@
 
     = yield
 
-    %script{ :language => "Javascript", :src => '/javascript/highlight.pack.js' }
     %script{ :language => "Javascript", :src => '/javascript/jquery.min.js' }
     %script{ :language => "Javascript", :src => '/javascript/main.js' }
-    %script{ :language => 'Javascript' }
-      hljs.initHighlightingOnLoad();
-

@@ -76,4 +76,10 @@ class PostTest < WmnizrTest
     assert_equal 1, Post.by_year(2005).count
     assert_equal 1, Post.by_year(Time.now.year).count
   end
+
+  def test_should_fill_in_rendered_text_upon_saving
+    @post = Post.create :title => 'foo', :text => 'barfight !', :published_at => Date.parse('11-11-2005'), :user => @user
+
+    assert_equal 'barfight !', @post.rendered_text
+  end
 end

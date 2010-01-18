@@ -5,4 +5,4 @@
     posted on the day europeans know as
     %span.date= post.published_at.strftime("%d.%m.%Y")
   .content
-    = post.text
+    = preserve post.rendered_text
