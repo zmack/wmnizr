@@ -23,6 +23,37 @@ task :import do
   end
 end
 
+desc "Migrate all shitty pre's to manly code tags"
+task :pre_to_code do
+  Post.all.each do |post|
+    doc = Nokogiri::HTML.parse(post.text)
+    doc.css('pre[name=code]').each do |pre|
+      code = Nokogiri::XML::Node.new('code', doc)
+      code.inner_html = pre.inner_html
+      code.set_attribute('class', 'ruby')
+      pre.replace(code)
+    end
+
+    post.text = doc.css('body').inner_html
+    post.save!
+  end
+end
+
+desc "Add lang to all pre's"
+task :add_lang_to_pre do
+  Post.all.each do |post|
+    doc = Nokogiri::HTML.parse(post.text)
+    doc.css('pre[name=code]').each do |pre|
+      pre.remove_attribute('name')
+      pre.set_attribute('class', 'code')
+      pre.set_attribute('lang', 'ruby')
+    end
+
+    post.text = doc.css('body').inner_html
+    post.save!
+  end
+end
+
 desc "Remove all posts" 
 task :wipe_posts do
   Post.all.destroy
